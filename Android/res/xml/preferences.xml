@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Server settings">
+
+        <EditTextPreference
+            android:key="base_url"
+            android:title="Base url"
+            android:defaultValue="http://cleverua.com/" />
+
+        <EditTextPreference
+                android:key="fs_action"
+                android:title="FS action url"
+                android:defaultValue="fs.json" />
+
+        <EditTextPreference
+                android:key="s3_action"
+                android:title="S3 action url"
+                android:defaultValue="s3.json" />
+
+        <EditTextPreference
+                android:key="stats_action"
+                android:title="Stats url"
+                android:defaultValue="stats.json" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Upload settings">
+
+        <SwitchPreference
+            android:title="Upload to FS"
+            android:summary="App will upload photo to server file system"
+            android:key="fs"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+                android:title="Upload to S3"
+                android:summary="App will upload photo directly to S3"
+                android:key="s3"
+                android:defaultValue="true" />
+
+        </PreferenceCategory>
+
+</PreferenceScreen>

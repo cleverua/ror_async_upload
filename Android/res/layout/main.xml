@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <RelativeLayout
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent">
+
+                            <TextView
+                                android:id="@+id/label"
+                                android:text="Select image"
+                                android:textStyle="bold"
+                                android:textSize="24sp"
+                                android:layout_marginTop="20dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+
+                            <ImageButton
+                                    android:id="@+id/imageview"
+                                    android:onClick="onSelectImage"
+                                    android:layout_below="@id/label"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_width="250dp" android:background="@drawable/image_bg"
+                                    android:layout_height="250dp"/>
+
+                            <Button
+                                android:id="@+id/upload_button"
+                                android:layout_width="260dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_centerHorizontal="true"
+                                android:text="Upload"
+                                android:onClick="onClickUpload"
+                                android:layout_below="@id/imageview" />
+
+                            <TextView
+                                android:id="@+id/fs_stat"
+                                android:visibility="gone"
+                                android:layout_below="@id/upload_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_horizontal"
+                                android:textStyle="bold"
+                                android:textSize="20sp"
+                                android:text="FS upload time: " />
+
+                            <TextView
+                                android:id="@+id/s3_stat"
+                                android:visibility="gone"
+                                android:layout_below="@id/fs_stat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:textStyle="bold"
+                                android:textSize="20sp"
+                                android:text="S3 upload time: " />
+
+            </RelativeLayout>
+
+</ScrollView>
