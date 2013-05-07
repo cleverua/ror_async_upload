@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -44,8 +45,7 @@ public class UploadService extends IntentService {
     public static final int ID_S3 = 1102;
 
     private String baseUrl;
-    private String fsUrl;
-    private String s3url;
+    private String uploadAction;
 
     private boolean uploadFs;
     private boolean uploadS3;
@@ -69,13 +69,13 @@ public class UploadService extends IntentService {
 
         if (uploadFs) {
             showNotification(ID_FS);
-            String status = uploadImage(imageUrl, baseUrl + fsUrl, ID_FS);
+            String status = uploadImage(imageUrl, baseUrl + uploadAction, ID_FS);
             notifyUI(status, ID_FS);
         }
 
         if (uploadS3) {
             showNotification(ID_S3);
-            String status = uploadImage(imageUrl, baseUrl + s3url, ID_S3);
+            String status = uploadImage(imageUrl, baseUrl + uploadAction, ID_S3);
             notifyUI(status, ID_S3);
         }
     }
@@ -91,16 +91,14 @@ public class UploadService extends IntentService {
             }
         }
 
-        fsUrl = preferences.getString("fs_action", "");
-        s3url = preferences.getString("s3_action", "");
+        uploadAction = preferences.getString("action", "");
 
         uploadFs = preferences.getBoolean("fs", true);
         uploadS3 = preferences.getBoolean("s3", true);
 
         Log.d(TAG, "Obtained preferences => " +
                 "baseUrl=" + baseUrl +
-                ", fsUrl=" + fsUrl +
-                ", s3Url=" + s3url +
+                ", action=" + uploadAction +
                 ", uploadFs=" + uploadFs +
                 ", uploadS3=" + uploadS3);
     }
@@ -184,6 +182,15 @@ public class UploadService extends IntentService {
             mpEntity.addPart("photo", photo);
 
             try {
+
+                switch (id) {
+                    case ID_FS:
+                        mpEntity.addPart("upload_type", new StringBody("fs"));
+                        break;
+                    case ID_S3:
+                        mpEntity.addPart("upload_type", new StringBody("s3"));
+                }
+
                 // Set up HTTP client.
                 HttpParams httpParameters = new BasicHttpParams();
                 // Set the timeout in milliseconds until a connection is established.

@@ -8,20 +8,18 @@
         <EditTextPreference
             android:key="base_url"
             android:title="Base url"
+            android:summary="Server base url. Usually domain"
             android:defaultValue="http://cleverua.com/" />
 
         <EditTextPreference
-                android:key="fs_action"
-                android:title="FS action url"
-                android:defaultValue="fs.json" />
-
-        <EditTextPreference
-                android:key="s3_action"
-                android:title="S3 action url"
-                android:defaultValue="s3.json" />
+                android:key="action"
+                android:summary="Base url + Action Url to upload image"
+                android:title="Action url"
+                android:defaultValue="upload.json" />
 
         <EditTextPreference
                 android:key="stats_action"
+                android:summary="Base url + Stats Action url to get statistics"
                 android:title="Stats url"
                 android:defaultValue="stats.json" />
 
