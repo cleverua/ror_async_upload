@@ -9,19 +9,19 @@
             android:key="base_url"
             android:title="Base url"
             android:summary="Server base url. Usually domain"
-            android:defaultValue="http://cleverua.com/" />
+            android:defaultValue="http://ror-async-upload.cleverua.net/" />
 
         <EditTextPreference
                 android:key="action"
                 android:summary="Base url + Action Url to upload image"
                 android:title="Action url"
-                android:defaultValue="upload.json" />
+                android:defaultValue="rest/photo.json" />
 
         <EditTextPreference
                 android:key="stats_action"
                 android:summary="Base url + Stats Action url to get statistics"
                 android:title="Stats url"
-                android:defaultValue="stats.json" />
+                android:defaultValue="rest/statistics/" />
 
     </PreferenceCategory>
 

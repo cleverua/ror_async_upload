@@ -40,7 +40,7 @@
 
                             <TextView
                                 android:id="@+id/fs_stat"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:layout_below="@id/upload_button"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
 
                             <TextView
                                 android:id="@+id/s3_stat"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:layout_below="@id/fs_stat"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -60,6 +60,17 @@
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:text="S3 upload time: " />
+
+                            <TextView
+                                    android:id="@+id/fs_s3_stat"
+                                    android:visibility="visible"
+                                    android:layout_below="@id/s3_stat"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:textStyle="bold"
+                                    android:textSize="20sp"
+                                    android:text="FS + S3 upload time: " />
 
             </RelativeLayout>
 

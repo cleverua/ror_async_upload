@@ -35,6 +35,7 @@ public class UploadActivity extends Activity {
     private String takenImageUrl;
     private TextView tvFsStat;
     private TextView tvS3Stat;
+    private TextView tvFsS3Stat;
 
     private UploadReceiver receiver = new UploadReceiver();
 
@@ -45,6 +46,7 @@ public class UploadActivity extends Activity {
 
         tvFsStat = (TextView) findViewById(R.id.fs_stat);
         tvS3Stat = (TextView) findViewById(R.id.s3_stat);
+        tvFsS3Stat = (TextView) findViewById(R.id.fs_s3_stat);
     }
 
     @Override
@@ -109,11 +111,11 @@ public class UploadActivity extends Activity {
         int lastS3Id = ((MyApplication) getApplication()).getLastS3Id();
 
         if (lastFsId != -1) {
-            new GetStatisticTask(lastFsId, tvFsStat).execute();
+            new GetStatisticTask(lastFsId).execute();
         }
 
         if (lastS3Id != -1) {
-            new GetStatisticTask(lastS3Id, tvS3Stat).execute();
+            new GetStatisticTask(lastS3Id).execute();
         }
 
         if (lastFsId == -1 && lastS3Id == -1) {
@@ -151,8 +153,8 @@ public class UploadActivity extends Activity {
         setUploadButtonEnabled(true);
         ((MyApplication) getApplication()).setLastFsId(-1);
         ((MyApplication) getApplication()).setLastS3Id(-1);
-        tvFsStat.setVisibility(View.GONE);
-        tvS3Stat.setVisibility(View.GONE);
+        //tvFsStat.setVisibility(View.GONE);
+        //tvS3Stat.setVisibility(View.GONE);
     }
 
     private void takeImageFromGallery() {
@@ -210,14 +212,12 @@ public class UploadActivity extends Activity {
         button.setEnabled(isEnabled);
     }
 
-    private class GetStatisticTask extends AsyncTask<Void, Void, String> {
+    private class GetStatisticTask extends AsyncTask<Void, Void, JSONObject> {
 
         private ProgressDialog dialog;
-        private TextView textView;
         private int id;
 
-        private GetStatisticTask(int id, TextView textView) {
-            this.textView = textView;
+        private GetStatisticTask(int id) {
             this.id = id;
         }
 
@@ -229,7 +229,7 @@ public class UploadActivity extends Activity {
         }
 
         @Override
-        protected String doInBackground(Void... voids) {
+        protected JSONObject doInBackground(Void... voids) {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(UploadActivity.this);
             String baseUrl = preferences.getString("base_url", "");
             if (!TextUtils.isEmpty(baseUrl)){
@@ -246,7 +246,7 @@ public class UploadActivity extends Activity {
                     //HttpClient client = new DefaultHttpClient();
 
                     // Put method.
-                    HttpGet method = new HttpGet(baseUrl + statsActionUrl + "?id=" + id);
+                    HttpGet method = new HttpGet(baseUrl + statsActionUrl + id);
                     HttpResponse response = client.execute(method);
 
                     // Result.
@@ -255,7 +255,7 @@ public class UploadActivity extends Activity {
                         String result = EntityUtils.toString(responseEntity);
                         JSONObject object = new JSONObject(result);
 
-                        return object.optString("time");
+                        return object;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -271,10 +271,26 @@ public class UploadActivity extends Activity {
         }
 
         @Override
-        protected void onPostExecute(String str) {
+        protected void onPostExecute(JSONObject jsonObject) {
             dialog.dismiss();
-            textView.setText(str);
-            textView.setVisibility(View.VISIBLE);
+
+            String type = jsonObject.optString("type");
+
+            if (type.equals("fs")) {
+                String fsTime = jsonObject.optString("fs_time");
+                String fsS3Time = jsonObject.optString("fs_s3_time");
+
+                tvFsStat.setText("FS Upload time" + fsTime);
+                tvFsS3Stat.setText("FS + S3 Upload time" + fsS3Time);
+            } else if (type.equals("s3")) {
+                String s3Time = jsonObject.optString("s3_time");
+                tvS3Stat.setText("S3 Upload time" + s3Time);
+            }
+
+
+
+            //.setText(str);
+            //textView.setVisibility(View.VISIBLE);
         }
     }
 
