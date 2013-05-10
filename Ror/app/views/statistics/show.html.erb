@@ -1,0 +1,42 @@
+<% content_for :title_page do  %>
+  <h2><%= photo_filename(@photo) %></h2>
+<% end %>
+
+
+<div class="content" style="display:block;">
+
+  <label>Photo in original size:</label>
+  <span class='text-form'><%= photo_original(@photo) %></span><br />
+
+  <label>Photo 640x640:</label>
+  <span class='text-form'><%= photo_version( @photo, Photo::MAIN_RETINA ) %></span><br />
+
+  <label>Photo 320x320:</label>
+  <span class='text-form'><%= photo_version( @photo, Photo::MAIN_MEDIUM ) %></span><br />
+
+  <label>Photo 160x160:</label>
+  <span class='text-form'><%= photo_version( @photo, Photo::THUMB_RETINA ) %></span><br />
+
+  <label>Photo 80x80:</label>
+  <span class='text-form'><%= photo_version( @photo, Photo::THUMB_MEDIUM ) %></span><br />
+
+  <label>S3 download time:</label>
+  <span class='text-form'><%= @photo.statistics && !@photo.statistics.s3_photo_stats.blank? ? "#{@photo.statistics.s3_photo_stats.to_s} s" : "-" %></span><br />
+
+  <label>FS download time:</label>
+  <span class='text-form'><%= @photo.statistics && !@photo.statistics.fs_photo_stats.blank? ? "#{@photo.statistics.fs_photo_stats.to_s} s" : "-" %></span><br />
+
+  <label>FS to S3 download time:</label>
+  <span class='text-form'><%= @photo.statistics && !@photo.statistics.fs_s3_photo_stats.blank? ? "#{@photo.statistics.fs_s3_photo_stats.to_s} s" : "-" %></span><br />
+
+  <label>Original File Size:</label>
+  <span class='text-form'><%= photo_size(@photo) %></span><br />
+
+  <label>Original File Resolution:</label>
+  <span class='text-form'><%= photo_resolution(@photo) %></span><br />
+
+</div>
+
+<div class="actionbar">
+  <%= link_to "Back", statistics_path, class: 'btn' %>
+</div>

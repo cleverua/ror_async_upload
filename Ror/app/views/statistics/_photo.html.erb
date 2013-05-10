@@ -1,0 +1,31 @@
+<tr valign="top" class="<%= cycle('even','odd') %>" id="<%= photo.id %>">
+
+  <td>
+    <%= photo_version( photo, Photo::THUMB_MEDIUM ) %>
+  </td>
+
+  <td>
+    <%= photo.statistics && !photo.statistics.s3_photo_stats.blank? ? "#{photo.statistics.s3_photo_stats.to_s} s" : "-" %>
+  </td>
+  
+  <td>
+    <%= photo.statistics && !photo.statistics.fs_photo_stats.blank? ? "#{photo.statistics.fs_photo_stats.to_s} s" : "-" %>
+  </td>
+  
+  <td>
+    <%= photo.statistics && !photo.statistics.fs_s3_photo_stats.blank? ? "#{photo.statistics.fs_s3_photo_stats.to_s} s" : "-" %>
+  </td>
+  
+  <td>
+    <%= photo_size(photo) %>
+  </td>
+  
+  <td>
+    <%= photo_resolution(photo) %>
+  </td>
+  
+  <td>
+    <%= link_to "Details", statistic_path(photo), class: "text-link" %>
+  </td>
+
+</tr>

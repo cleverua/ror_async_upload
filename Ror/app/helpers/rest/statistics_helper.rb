@@ -1,0 +1,2 @@
+module Rest::StatisticsHelper
+end

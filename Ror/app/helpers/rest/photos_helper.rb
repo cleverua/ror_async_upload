@@ -1,0 +1,2 @@
+module Rest::PhotosHelper
+end

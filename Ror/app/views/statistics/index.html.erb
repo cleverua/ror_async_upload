@@ -1,0 +1,26 @@
+<% content_for :title_page do  %>
+  <h2>Statistics</h2>
+<% end %>
+
+<% if @photos.empty? %>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="table">
+    <tr class="title" valign="top">
+      <td class="col_1" style='text-align:center'>No information found</td>
+    </tr>
+  </table>
+<% else %>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="table">
+    <tr class="title" valign="top">
+      <td>Photo</td>
+      <td>S3<br />download<br />time</td>
+      <td>FS<br />download<br />time</td>
+      <td>FS to S3<br />download<br />time</td>
+      <td>Original<br />File<br />Size</td>
+      <td>Original<br />File<br />Resolution</td>
+      <td>Revise</td>
+    </tr>
+    <%= render partial: "photo", collection: @photos %>
+  </table>
+
+  <%= paginate @photos %>
+<% end %>
