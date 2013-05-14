@@ -1,10 +1,8 @@
 module StatisticsHelper
 
   def photo_size(photo)
-    if !photo.s3_photo.path.blank?
-      "#{photo.s3_photo.file.size} kb"
-    elsif !photo.fs_s3_photo.path.blank?
-      "#{photo.fs_s3_photo.file.size} kb"
+    if !photo.size.blank?
+      "#{photo.size} kb"
     else
       "0 kb"
     end
@@ -23,10 +21,8 @@ module StatisticsHelper
   end
 
   def photo_filename(photo)
-    if !photo.s3_photo.path.blank?
-      "Photo - #{photo.s3_photo.file.filename} - details"
-    elsif !photo.fs_s3_photo.path.blank?
-      "Photo - #{photo.fs_s3_photo.file.filename} - details"
+    if !photo.filename.blank?
+      "Photo - #{photo.filename} - details"
     else
       "No Photo"
     end
