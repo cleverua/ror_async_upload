@@ -9,7 +9,10 @@ job "uploader.create_fs_s3_photo_from_fs_photo" do |ids|
   
 
   unless photo.nil?
-    save_time = Benchmark.realtime { photo.update_attribute( :fs_s3_photo, photo.fs_photo) }
+    save_time = Benchmark.realtime do
+      photo.fs_s3_photo = photo.fs_photo
+      photo.save
+    end
     photo.statistics.update_attribute( :fs_s3_photo_stats, save_time )
     FileUtils.remove_dir("#{Rails.root}/public/fs_uploads/photo/fs_photo/#{photo.id}", :force => true)
     photo.remove_fs_photo!

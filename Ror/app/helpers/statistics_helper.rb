@@ -8,18 +8,6 @@ module StatisticsHelper
     end
   end
 
-  def photo_resolution(photo)
-    if !photo.s3_photo.path.blank?
-      img = ::Magick::Image::read(photo.s3_photo.url).first
-      "#{img.columns}x#{img.rows}"
-    elsif !photo.fs_s3_photo.path.blank?
-      img = ::Magick::Image::read(photo.fs_s3_photo.url).first
-      "#{img.columns}x#{img.rows}"
-    else
-      "0x0"
-    end
-  end
-
   def photo_filename(photo)
     if !photo.filename.blank?
       "Photo - #{photo.filename} - details"
