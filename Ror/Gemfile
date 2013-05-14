@@ -20,6 +20,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem "fog", "~> 1.11.0"
 gem 'rmagick'
 gem 'stalker'
 gem 'kaminari'
