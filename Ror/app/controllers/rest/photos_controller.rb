@@ -10,7 +10,7 @@ class Rest::PhotosController < ApplicationController
       if params[:upload_type] == UPLOAD_TYPE_FS
         @photo.fs_photo = params[:photo]
         @photo.size = params[:photo].size
-        @photo.filename = params[:photo].original_name
+        @photo.filename = params[:photo].original_filename
         if fs_photo_save(@photo)
           Stalker.enqueue('uploader.create_fs_s3_photo_from_fs_photo', [@photo.id])
           return_status_ok(@photo.id)
@@ -20,7 +20,7 @@ class Rest::PhotosController < ApplicationController
       else
         @photo.s3_photo = params[:photo]
         @photo.size = params[:photo].size
-        @photo.filename = params[:photo].original_name
+        @photo.filename = params[:photo].original_filename
         if s3_photo_save(@photo)
           return_status_ok(@photo.id)
         else
